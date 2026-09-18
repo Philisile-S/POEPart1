@@ -20,7 +20,13 @@ public class POEPart1 {
         String surname;
         String password;
         String cellNumber;
+        String loginUserName;
+        String loginUser;
+        String loginPassword;
+        String registrationMessage;
+        String loginMessage;
         
+        // USER REGISTRATION 
         
        //User's name input
         System.out.print("Please enter your name: ");
@@ -36,7 +42,8 @@ public class POEPart1 {
          
           while (!checksUserName(userName)){
               System.out.println("Username is not valid");
-              System.out.println("Username must contain an underscore (_) and be at least 5 characters long.");
+              System.out.println("Username must contain an underscore (_) "
+                      + "and be at least 5 characters long.");
               
               System.out.print("Please enter username again: ");
               userName = myInput.next();
@@ -50,7 +57,7 @@ public class POEPart1 {
             System.out.print("Please enter your password: ");
             password = myInput.nextLine();
      
-      if (checkPassword(password)){
+      if (checkPasswordComplexity(password)){
           System.out.println("Password successfully captured.");
        break;
        }
@@ -75,19 +82,46 @@ public class POEPart1 {
         break;
        }
        else{
-       System.out.println("Cellphone number incorrectly formatted or does not contain international code");
+       System.out.println("Cellphone number incorrectly formatted or"
+               + " does not contain international code");
        System.out.println("Your cellphone number must start with: ");
        System.out.println("+27");
        System.out.println("Your cellphone number, e.g +27123678417");
       }
     
          }
+      
+       //Creating Login object
+         Login login = new Login();
+                 
+      //Register the user 
+      registrationMessage = login.registerUser(
+        userName, 
+        password,
+        name,
+        surname,
+        cellNumber);
+      
+      System.out.println("/n" + registrationMessage);
      
        System.out.println();
        
        System.out.println("Registration successful");
        System.out.println("Welcome "+ name + " "+ surname);
-    
+   
+       //Login Features
+       System.out.print("Please enter your username: ");
+       loginUserName = myInput.nextLine();
+       
+       System.out.print("Please enter your password: ");
+       loginPassword = myInput.nextLine();
+       
+       //Checking login details
+        loginMessage = login.returnLoginStatus(loginUserName, loginPassword);
+        
+        System.out.println("/n" + loginMessage);
+        
+       //Close Scanner
      myInput.close();
       }
      
@@ -148,7 +182,10 @@ public class POEPart1 {
            }
         }
         return true;
+        
       }
+      
+      
 }
       
      
