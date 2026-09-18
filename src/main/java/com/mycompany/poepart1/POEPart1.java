@@ -18,15 +18,15 @@ public class POEPart1 {
         String userName;
         String name;
         String surname;
-        String password;
-        String cellNumber;
+        String password = " ";
+        String cellNumber = " ";
         String loginUserName;
         String loginPassword;
         String registrationMessage;
         String loginMessage;
         
          //Creating Login object
-         Login login = new Login(userName, name, surname, password, cellNumber);
+         Login login = new Login();
         
         // USER REGISTRATION 
         
@@ -42,7 +42,7 @@ public class POEPart1 {
          System.out.println("Enter your username: ");
          userName = myInput.next();
          
-          while (!login.checksUserName(userName)){
+          while (!login.checkUserName(userName)){
               System.out.println("Username is not valid");
               System.out.println("Username must contain an underscore (_) "
                       + "and be at least 5 characters long.");
