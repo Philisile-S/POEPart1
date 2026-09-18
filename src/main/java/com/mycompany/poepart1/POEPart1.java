@@ -60,8 +60,6 @@ public class POEPart1 {
             password = myInput.nextLine();
      
       if (!login.checkPasswordComplexity(password)){
-          System.out.println("Password is not correctly formatted.");
-          System.out.println("Password must be:");
           System.out.println("Be at least 8 characters long");
           System.out.println("Contain a capital letter");
           System.out.println("Contain a number");
