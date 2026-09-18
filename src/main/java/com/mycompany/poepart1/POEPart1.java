@@ -45,7 +45,7 @@ public class POEPart1 {
           while (!login.checkUserName(userName)){
               System.out.println("Username is not valid");
               System.out.println("Username must contain an underscore (_) "
-                      + "and be at least 5 characters long.");
+                      + "and no more than 5 characters long.");
               
               System.out.print("Please enter username again: ");
               userName = myInput.next();
