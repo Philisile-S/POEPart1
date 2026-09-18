@@ -26,7 +26,7 @@ public class POEPart1 {
         String loginMessage;
         
          //Creating Login object
-         Login login = new Login();
+         Login login = new Login(userName, name, surname, password, cellNumber);
         
         // USER REGISTRATION 
         
@@ -76,7 +76,7 @@ public class POEPart1 {
           System.out.println("Please enter your cellphone number: ");
           cellNumber = myInput.nextLine();
           
-       if (checkCellPhoneNumber(cellNumber)){
+       if (!login.checkCellPhoneNumber(cellNumber)){
        System.out.println("Cellphone number incorrectly formatted or"
                + " does not contain international code");
        System.out.println("Your cellphone number must start with +27.");
@@ -114,72 +114,6 @@ public class POEPart1 {
         
        //Close Scanner
      myInput.close();
-      }
      
-      //Method to check if username is valid
-      public static boolean checksUserName(String username) {
-          
-          return username.length() >= 5 && username.contains("_");
-        }
-   
-     //Method to check if password is vaild
-     public static boolean checkPassword(String password) { 
-        
-         if(password.length() < 8){
-           return false;  
-        } 
-         
-        boolean hasCapital = false;
-        boolean hasNumber = false;
-        boolean hasSpecial = false;
-         
-        for (int i = 0; i < password.length(); i++)  {
-           
-            char character = password.charAt(i);
-         
-        if (Character.isUpperCase(character)) {
-              hasCapital = true;
-        }
-        
-        if (Character.isDigit(character)) {
-            hasNumber = true;
-        }
-        
-        if (Character.isLetterOrDigit(character)) {
-            hasSpecial = true;
-        }
-       } 
-        //Password is vaild only when all three requirements are met
-        return hasCapital && hasNumber && hasSpecial;
-     }
-     
-     //Method to check if the cellphone number is vaild
-      public static boolean checkCellPhoneNumber(String cellNumber) {
-          
-          if (!cellNumber.startsWith("+27")) {
-              return false;
-          }
-          
-         String numberWithoutSpaces = cellNumber.replace(" "," ");
-         
-         if (numberWithoutSpaces.length() !=12) {
-             return false;
-           }
-         
-        for (int i = 3; i < numberWithoutSpaces.length(); i++) {
-           
-           if (!Character.isDigit(numberWithoutSpaces.charAt(i))) {
-               return false;
-           }
-        }
-        return true;
-        
-      }
-      
-      
+    }
 }
-      
-     
-  
-         
-     
