@@ -72,23 +72,18 @@ public class POEPart1 {
       
     //Ask for user's cellphone number 
       
-      while(true){
+      while(!login.checkCellPhoneNumber(cellNumber)){
           System.out.println("Please enter your cellphone number: ");
           cellNumber = myInput.nextLine();
           
        if (checkCellPhoneNumber(cellNumber)){
-          System.out.println("Cellphone number successfully added.");
-        break;
-       }
-       else{
        System.out.println("Cellphone number incorrectly formatted or"
                + " does not contain international code");
-       System.out.println("Your cellphone number must start with: ");
-       System.out.println("+27");
-       System.out.println("Your cellphone number, e.g +27123678417");
-      }
-    
+       System.out.println("Your cellphone number must start with +27.");
+       System.out.println("Example: +27123678417");
          }
+      }
+         System.out.println("Cellphone number successfully added."); 
                  
       //Register the user 
       registrationMessage = login.registerUser(
@@ -98,7 +93,7 @@ public class POEPart1 {
         surname,
         cellNumber);
       
-      System.out.println("/n" + registrationMessage);
+      System.out.println("\n" + registrationMessage);
      
        System.out.println();
        
