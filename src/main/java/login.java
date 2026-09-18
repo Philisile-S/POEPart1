@@ -14,7 +14,10 @@ public class login {
     String surname;
     String password;
     String cellNumber;
-    
+    //Those stores the registerd user's details
+     String registeredUsername;
+     String registeredPassword;
+     
     //Constructor
     public login(){
         userName = " ";
@@ -22,6 +25,9 @@ public class login {
         name = " ";
         surname = " ";
         cellNumber = " ";
+        
+        registeredUsername = " ";
+        registeredPassword = " ";
     }
     
     // Method 1: Check username
@@ -80,12 +86,17 @@ public class login {
          return "Cell phone number is not correctly formatted.";
       }
       
+      //Check user cellphone number
+      if(!checkCellPhoneNumber(cellNumber)){
+        return "Cell phone number is not correctly formatted.";
+      }
+      
       //Store the user's information 
-     String registeredUsername = userName;
-     String registeredPassword = password;
+     this.registeredUsername = userName;
+     this.registeredPassword = password;
      this.name = name;
      this.surname = surname;
-     String cellphoneNumber = cellNumber;
+     this.cellNumber = cellNumber;
      
       return "Registration successful.";
               
