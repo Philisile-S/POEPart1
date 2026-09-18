@@ -35,15 +35,13 @@ public class Login {
     // Method 1: Check username
     public boolean checkUserName(String userName) {
          //Check userName format first (1)
-      if (!checkUserName(userName)) {
-         return "Username is not correctly formatted;please ensure that your "
-                +" username contains an underscore and is no more than five" 
-                 +"characters in length.";
+       return userName.contains("_")
+               && userName.length() <= 5;
     }
     
     //Method 2: Check password complexity
-    public boolean checkPasswordComplexity(String password){
-       
+   public boolean checkPasswordComplexity(String password) {
+   
         boolean hasCapitalLetter = false;
         boolean hasNumber = false;
         boolean hasSpecialCharacter = false;
@@ -67,7 +65,7 @@ public class Login {
                 && hasCapitalLetter
                 && hasNumber
                 && hasSpecialCharacter;
-    }  
+   }
     
 // 3: Cellphone number checker
 public boolean checkCellPhoneNumber(String cellNumber) {
@@ -119,8 +117,7 @@ public boolean checkCellPhoneNumber(String cellNumber) {
    }
    
    //Method 4: Login user
-    public boolean loginUser(String userName,String password,
-             String registeredUsername, String registeredPassword) {
+    public boolean loginUser(String userName,String password) {
       
         userName = userName.trim();
         
