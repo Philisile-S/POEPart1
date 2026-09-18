@@ -110,7 +110,7 @@ public class POEPart1 {
        //Checking login details
         loginMessage = login.returnLoginStatus(loginUserName, loginPassword);
         
-        System.out.println("/n" + loginMessage);
+        System.out.println("\n" + loginMessage);
         
        //Close Scanner
      myInput.close();
