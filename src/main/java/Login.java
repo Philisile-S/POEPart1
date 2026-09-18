@@ -32,72 +32,86 @@ public class Login {
     
     // Method 1: Check username
     public boolean checkUserName(String userName) {
-     return userName.contains("_") && userName.length() <=5;
+         //Check userName format first (1)
+      if (!checkUserName(userName)) {
+         return "Username is not correctly formatted;please ensure that your "
+                  +"username contains an underscore and is no more than five "
+                  +"characters in length.";
     }
     
     //Method 2: Check password complexity
-    public boolean checkPasswordComplexity(String password){
-         
-         boolean hasCapitalLetter = false;
-         boolean hasNumber = false;
-         boolean hasSpecialCharacter = false;
-         
-         for (int i = 0; i < password.length(); i++){
-         
-             char character = password.charAt(i);
-             
-             if (Character.isUpperCase(character)){
-                 hasCapitalLetter = true;
-             }
-             if (Character.isDigit(character)){
-                   hasNumber = true;
-             }
-             if (!Character.isLetterOrDigit(character)){
-                 hasSpecialCharacter = true;
-             }
-         }
+    public boolean checkPasswordComplexity(String Password) {
+        boolean hasCapitalLetter = false;
+        boolean hasNumber = false;
+        boolean hasSpecialCharacter = false;
+        
+        for (int i = 0; i < password.length(); i++) {
+            
+            char character = password.charAt(i);
+            
+            if (Character.isUpperCase(character)) {
+                hasCapitalLetter = true;
+            }
+            if (Character.isDigit(character)) {
+                hasNumber = true;
+            }
+            if (!Character.isLetterOrDigit(character)) {
+                hasSpecialCharacter = true;
+            }
+        }
     
-    return password.length() >= 8
-            && hasCapitalLetter
-            && hasNumber
-            &&hasSpecialCharacter;
-  
+        return password.length() >= 8
+                && hasCapitalLetter
+                && hasNumber
+                && hasSpecialCharacter;
+    }  
 }
 
-//Cellphone number checker using REGEX
-    public boolean checkCellPhoneNumber(String cellNumber){
-        //Cellphone should have the correct length and
-        //contaion the international code. South Africa: +27
-        String regex = "^\\+27[6-8][0-9]{8}$";
-        
-        return cellNumber.matches(regex);
-    }
+// 3: Cellphone number checker
+public boolean cheeckCellPhoneNumber(String cellNumber) {
+    
+    String regex = "^\\+27[6-8][0-9]{7}$";
 
+    return cellNumber.matches(regex);
+}
+   
 //Method 3: Register user
    public String registerUser(String userName,String password,String name, 
                         String surname,String cellphone){
-      //String manipulation
+      
+//String manipulation
       userName = userName.trim();
       name = name.trim();
       surname = surname.trim();
-      cellNumber = cellNumber.trim();
+      cellphone = cellphone.trim();
       
-      //Check userName
-      if (!checkUserName(userName)) {
-         return "Cell phone number is not correctly formatted.";
+      //Check username
+      if (!checkUserName(String userName)){
+       return "Username is correctly formatted; please ensure that"
+               +"your username contains an underscore and is no more than"
+               +"five characters in length.";
       }
       
-      //Check user cellphone number
-      if(!checkCellPhoneNumber(cellNumber)){
-        return "Cell phone number is not correctly formatted.";
+      //Check password 
+       if (!checkPasswordComplexity(password)) {
+        return "Password is not correctly formatted; please ensure that the"
+               +"password contains at least eight characters, a capital"
+               +"letter, a number, and a special character.";
+       }
+      
+      //Check cellphone number
+      if(!checkCellPhoneNumber(cellphone)){
+        return "Cell number is incorrectly formatted or does not contain"
+               +"an international code; please correct the number and try again.";
       }
+      
       
       //Store the user's information 
      this.registeredUsername = userName;
      this.registeredPassword = password;
      this.name = name;
      this.surname = surname;
-     this.cellNumber = cellNumber;
+     this.cellphone = cellphone;
      
       return "Registration successful.";
               
@@ -124,5 +138,5 @@ public class Login {
       return "Username or password incorrect," + "please try again.";
      }
     }
-}
+
   
