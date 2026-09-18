@@ -66,8 +66,9 @@ public class Login {
 
 //Cellphone number checker using REGEX
     public boolean checkCellPhoneNumber(String cellNumber){
-        
-        String regex = "^0[6-8][0-9]{8}$";
+        //Cellphone should have the correct length and
+        //contaion the international code. South Africa: +27
+        String regex = "^\\+27[6-8][0-9]{8}$";
         
         return cellNumber.matches(regex);
     }
