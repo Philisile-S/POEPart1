@@ -2,7 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-  package com.mycompany.poepart1;
+
+ package com.mycompany.poepart1;
+ 
 /**
  *
  * @author Philisile Mavuso
@@ -35,12 +37,13 @@ public class Login {
          //Check userName format first (1)
       if (!checkUserName(userName)) {
          return "Username is not correctly formatted;please ensure that your "
-                  +"username contains an underscore and is no more than five "
-                  +"characters in length.";
+                +" username contains an underscore and is no more than five" 
+                 +"characters in length.";
     }
     
     //Method 2: Check password complexity
-    public boolean checkPasswordComplexity(String Password) {
+    public boolean checkPasswordComplexity(String password){
+       
         boolean hasCapitalLetter = false;
         boolean hasNumber = false;
         boolean hasSpecialCharacter = false;
@@ -65,10 +68,9 @@ public class Login {
                 && hasNumber
                 && hasSpecialCharacter;
     }  
-}
-
+    
 // 3: Cellphone number checker
-public boolean cheeckCellPhoneNumber(String cellNumber) {
+public boolean checkCellPhoneNumber(String cellNumber) {
     
     String regex = "^\\+27[6-8][0-9]{7}$";
 
@@ -77,48 +79,48 @@ public boolean cheeckCellPhoneNumber(String cellNumber) {
    
 //Method 3: Register user
    public String registerUser(String userName,String password,String name, 
-                        String surname,String cellphone){
+                        String surname,String cellNumber){
       
 //String manipulation
       userName = userName.trim();
       name = name.trim();
       surname = surname.trim();
-      cellphone = cellphone.trim();
+      cellNumber = cellNumber.trim();
       
       //Check username
-      if (!checkUserName(String userName)){
+      if(!checkUserName(userName)){
        return "Username is correctly formatted; please ensure that"
                +"your username contains an underscore and is no more than"
                +"five characters in length.";
       }
       
       //Check password 
-       if (!checkPasswordComplexity(password)) {
+       if(!checkPasswordComplexity(password)){
         return "Password is not correctly formatted; please ensure that the"
                +"password contains at least eight characters, a capital"
                +"letter, a number, and a special character.";
        }
       
       //Check cellphone number
-      if(!checkCellPhoneNumber(cellphone)){
+      if(!checkCellPhoneNumber(cellNumber)){
         return "Cell number is incorrectly formatted or does not contain"
                +"an international code; please correct the number and try again.";
       }
-      
-      
+    
       //Store the user's information 
      this.registeredUsername = userName;
      this.registeredPassword = password;
      this.name = name;
      this.surname = surname;
-     this.cellphone = cellphone;
+     this.cellNumber = cellNumber;
      
       return "Registration successful.";
               
    }
    
    //Method 4: Login user
-    public boolean loginUser(String userName,String password) {
+    public boolean loginUser(String userName,String password,
+             String registeredUsername, String registeredPassword) {
       
         userName = userName.trim();
         
@@ -130,13 +132,15 @@ public boolean cheeckCellPhoneNumber(String cellNumber) {
    //Method 5: Return login status
     public String returnLoginStatus(String userName, String password){
        
-     if(loginUser(userName,password)){
+     if (loginUser(userName , password)){
           
-      return "Welcome" + name + " " + surname +"it is great to see you again.";
-        }
-     else {
-      return "Username or password incorrect," + "please try again.";
+      return "Welcome " + name + " " + surname
+              +"it is great to see you again.";
+     
+       } else {
+        
+      return "Username or password incorrect, please try again.";
      }
     }
-
+  }
   
