@@ -21,10 +21,12 @@ public class POEPart1 {
         String password;
         String cellNumber;
         String loginUserName;
-        String loginUser;
         String loginPassword;
         String registrationMessage;
         String loginMessage;
+        
+         //Creating Login object
+         Login login = new Login();
         
         // USER REGISTRATION 
         
@@ -40,7 +42,7 @@ public class POEPart1 {
          System.out.println("Enter your username: ");
          userName = myInput.next();
          
-          while (!checksUserName(userName)){
+          while (!login.checksUserName(userName)){
               System.out.println("Username is not valid");
               System.out.println("Username must contain an underscore (_) "
                       + "and be at least 5 characters long.");
@@ -53,16 +55,12 @@ public class POEPart1 {
          
       //Ask for password input 
      
-       while(true){
+       while(!login.checkPasswordComplexity(password)){
             System.out.print("Please enter your password: ");
             password = myInput.nextLine();
      
-      if (checkPasswordComplexity(password)){
-          System.out.println("Password successfully captured.");
-       break;
-       }
-      else{
-         System.out.println("Password is not correctly formatted.");
+      if (!login.checkPasswordComplexity(password)){
+          System.out.println("Password is not correctly formatted.");
           System.out.println("Password must be:");
           System.out.println("Be at least 8 characters long");
           System.out.println("Contain a capital letter");
@@ -70,6 +68,7 @@ public class POEPart1 {
           System.out.println("Contain a special character");
        }
    } 
+      System.out.println("Password successfully captured.");
       
     //Ask for user's cellphone number 
       
@@ -90,9 +89,6 @@ public class POEPart1 {
       }
     
          }
-      
-       //Creating Login object
-         Login login = new Login();
                  
       //Register the user 
       registrationMessage = login.registerUser(
