@@ -16,31 +16,32 @@ public class MessageTest {
     @Test 
     public void testMessageLengthSuccess() {
       SendMessage msg = new SendMessage("+27718693002","Hi Mike, can you join us for dinner tonight?", 0);
-      assertTrue(msg.checkMessageLength());
-    }
+      assertEquals("Message ready to send.",msg.vaildateMessageLength());
+    } 
     
     @Test
-    public void tsetMessageLengthFailure() {
-      String longText= "A". repeat(260); //260 characters
-      SendMessage msg = new SendMessage("27718693002", longText, 0);
-      assertFalse(msg.checkMessageLength());
+    public void testMessageLengthFailure() {
+      String longText= "A". repeat(260); //260 characters (10 over limit)
+      SendMessage msg = new SendMessage("+27718693002", longText, 0);
+      assertEquals("Message exceeds 250 characters by 10; please reduce the size.",msg.vaildateMessageLength());
     }
     
     @Test 
     public void testRecipientCellSuccess() {
       SendMessage msg = new SendMessage("+27718693002", "Test message", 0);
-      assertTrue(msg.checkRecipientCell());
+      assertEquals("Cell phone number successfully captured.", msg.validateRecipientCell());
     }
     
     @Test
     public void testRecipientCellFailure() {
       SendMessage msg = new SendMessage("08575975889", "Test message", 0); //Missing "+" international code
-      assertFalse(msg.checkRecipientCell());
+      assertEquals("Cell phone number is incorrectly formatted or does not contain"
+              + " an international code. Please correct the number and try again", msg.validateRecipientCell());
     }
     
     @Test
     public void testMessageHashGeneration() {
-      SendMessage msg = new SendMessage("+27718693002", "Hi Keegan, did you receive the payment?", 0);
+      SendMessage msg = new SendMessage("+27718693002", "Hi tonight", 0);
       //Note: Hash format incorporates first 2 digits of generated ID, Index 0, and 
       //first/last words in CAPS.
       assertNotNull(msg.createMessageHash());
@@ -51,6 +52,25 @@ public class MessageTest {
     public void testMessageIDValidation() {
       SendMessage msg = new SendMessage("+27718693002", "Hello", 0);
       assertTrue(msg.checkMessageID());
+      assertNotNull(msg.getMessageID());
+    }
+    
+    @Test 
+    public void testMessageActionSend(){
+       SendMessage msg = new SendMessage("+27718693002", "Hello", 0);
+     assertEquals("Message successfully sent.", msg.processMessageAction(1));
+    }
+    
+    @Test 
+    public void testMessageActionDisregard(){
+      SendMessage msg = new SendMessage("+27718693002", "Hello", 0);
+      assertEquals("Press 0 to delete the message.", msg.processMessageAction(2));
+    }
+    
+    @Test
+    public void testMessageActionStore(){
+    SendMessage msg = new SendMessage("+27718693002", "Hello", 0);
+    assertEquals("Message successfully stored.", msg.processMessageAction(3));
     }
 }
     
