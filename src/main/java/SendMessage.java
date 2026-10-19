@@ -15,7 +15,7 @@ import java.util.Random;
      private String messageHash;
      
      //Static counter to track total messages sent globally across instances
-     private int totalnumofMessageSent = 0;
+     private static int totalnumofMessageSent = 0;
      
      //Construtor 
      public SendMessage(String recipient, String messageText, int messageSent) {
