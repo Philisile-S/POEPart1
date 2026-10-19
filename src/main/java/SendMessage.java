@@ -40,16 +40,28 @@ import java.util.Random;
      
      //2. Check recipient cell number: Ensures no more than 10 characters and 
      //contain an international code like '+'
+     public String validateRecipientCell() {
+      if (this.recipient != null && this.recipient.startsWith("+") && this.recipient.length() <=10) {
+       return "Cell phone number successfully captured.";
+      }
+      else{
+         return "Cell phone number is incorrectly formatted or does not contain"
+                 + " an international code. Please correct the number and try again.";
+      }
+     }
      public boolean checkRecipientCell() {
-        if (this.recipient == null) return false;
-       //must contain an international code and must be less than 10 characters
-       // (or as per specs)
-          return this.recipient.startsWith("+") && this.recipient.length() <= 10;
+       return this.recipient != null && this.recipient.startsWith("+") && this.recipient.length() <= 10;
      }
     
      //3. Check message length (Max of 250 characters) 
-     public boolean checkMessageLength() {
-        return this.messageText != null && this.messageText.length() <= 250;
+     public String vaildateMessageLength() {
+       if (this.messageText != null && this.messageText.length() <= 250){
+         return "Message ready to send.";
+     }
+       else{
+          int excess = this.messageText.length() - 250;
+          return "Message exceeds 250 characters by " + excess + "please reduce the size.";
+               }
      }
      
      //4. Create Message Hash: first 2 numbers of the messageID(:)Message number
