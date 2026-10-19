@@ -172,7 +172,7 @@ class ChatMain{
                    System.out.print("Enter message (max 250 characters): ");
                    String text = scanner.nextLine();
                    
-                   Message msg = new Message(recipient, text, i);
+                   SendMessage msg = new SendMessage(recipient, text, i);
                    
                    //Validate recipient 
                    if (!msg.checkRecipientCell()) {
@@ -207,7 +207,7 @@ class ChatMain{
                    }
                 }
         
-        System.out.println("Total messages processed/sent: " + Message.returnTotalMessages());
+        System.out.println("Total messages processed/sent: " + SendMessage.returntotalnumofMessageSent());
          break;
          
             case 2: 
