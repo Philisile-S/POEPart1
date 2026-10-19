@@ -18,7 +18,7 @@ import java.util.Scanner;
      private int totalnumofMessageSent = 0;
      
      //Construtor 
-     public Message(String recipient, String messageText, int messageSent) {
+     public SendMessage(String recipient, String messageText, int messageSent) {
          this.messageID = generateMessageID();
          this.recipient = recipient;
          this.messageText = messageText;
@@ -94,5 +94,6 @@ import java.util.Scanner;
      
      public static int returntotalnumofMessageSent() {
         return totalnumofMessageSent;
-     }
+    }
 }
+
