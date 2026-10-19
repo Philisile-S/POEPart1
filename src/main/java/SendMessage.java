@@ -72,7 +72,7 @@ import java.util.Scanner;
        switch (choice) {
            //Send Message
            case 1: 
-               totalMessageSent++;
+               totalmessageSent++;
                return "Message successfully sent.";
            //Disregard Message or delete
            case 2: 
@@ -95,5 +95,5 @@ import java.util.Scanner;
      public static int returntotalnumofMessageSent() {
         return totalnumofMessageSent;
     }
-}
+ }
 
