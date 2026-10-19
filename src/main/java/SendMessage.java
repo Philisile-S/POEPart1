@@ -1,3 +1,5 @@
+package com.mycompany.poepart1;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ import java.util.Scanner;
        switch (choice) {
            //Send Message
            case 1: 
-               totalmessageSent++;
+               messageSent++;
                return "Message successfully sent.";
            //Disregard Message or delete
            case 2: 
@@ -89,7 +91,7 @@ import java.util.Scanner;
      //Getters
      public String getMessageID() { return messageID; }
      public String getRecipient() { return recipient; }
-     public String getMessageText() { return MessageText; }
+     public String getMessageText() { return messageText; }
      public String getMessageHash() { return messageHash; } 
      
      public static int returntotalnumofMessageSent() {
