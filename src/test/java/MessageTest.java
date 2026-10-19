@@ -2,11 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
  */
+package com.mycompany.poepart1;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,28 +13,45 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class MessageTest {
     
-    public MessageTest() {
+    @Test 
+    public void testMessageLengthSuccess() {
+      Message msg = new Message("+27718693002","Hi Mike, can you join us for dinner tonight?", 0);
+      assertTrue(msg.checkMessageLength());
     }
     
-    @BeforeAll
-    public static void setUpClass() {
+    @Test
+    public void tsetMessageLengthFailure() {
+      String longText= "A". repeat(260); //260 characters
+      Message msg = new Message("27718693002", longText, 0);
+      assertFalse(msg.checkMessageLength());
     }
     
-    @AfterAll
-    public static void tearDownClass() {
+    @Test 
+    public void testRecipientCellSuccess() {
+      Message msg = new Message("+27718693002", "Test message", 0);
+      assertTrue(msg.checkRecipientCell());
     }
     
-    @BeforeEach
-    public void setUp() {
+    @Test
+    public void testRecipientCellFailure() {
+      Message msg = new Message("08575975889", "Test message", 0); //Missing "+" international code
+      assertFalse(msg.checkRecipientCell());
     }
     
-    @AfterEach
-    public void tearDown() {
+    @Test
+    public void testMessageHashGeneration() {
+      Message msg = new Message("+27718693002", "Hi Keegan, did you receive the payment?");
+      //Note: Hash format incorporates first 2 digits of generated ID, Index 0, and 
+      //first/last words in CAPS.
+      assertNoNull(msg.createMessageHash());
+      assertTrue(msg.createMessageHash().contains(":0:"));
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void testMessageIDValidation() {
+      Message msg = new Message("+27718693002", "Hello", 0);
+      assertTrue(msg.checkMessageID());
+    }
 }
+    
+   
