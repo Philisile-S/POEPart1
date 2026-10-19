@@ -1,10 +1,6 @@
 package com.mycompany.poepart1;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * 
@@ -17,6 +13,8 @@ import java.util.Scanner;
      private String messageText;
      private String recipient;;
      private String messageHash;
+     
+     //Static counter to track total messages sent globally across instances
      private int totalnumofMessageSent = 0;
      
      //Construtor 
@@ -46,7 +44,7 @@ import java.util.Scanner;
         if (this.recipient == null) return false;
        //must contain an international code and must be less than 10 characters
        // (or as per specs)
-          return this.recipient.startsWith('+') && this.recipient.length() <= 10;
+          return this.recipient.startsWith("+") && this.recipient.length() <= 10;
      }
     
      //3. Check message length (Max of 250 characters) 
@@ -61,7 +59,7 @@ import java.util.Scanner;
          String firstTwoId = this.messageID.substring(0, 2);
          
          //Clean and extract first and last words
-         String cleanedText = this.messageText.replaceAll("[^a-zA-Z }", "").trim();
+         String cleanedText = this.messageText.replaceAll("[^a-zA-Z ]", "").trim();
          String[] words = cleanedText.split("\\s+");
          String firstWord = words.length > 0 ? words[0] : "";
          String lastWord = words.length > 1 ? words[words.length - 1] : firstWord;
@@ -96,6 +94,6 @@ import java.util.Scanner;
      
      public static int returntotalnumofMessageSent() {
         return totalnumofMessageSent;
-    }
+     }
  }
 
