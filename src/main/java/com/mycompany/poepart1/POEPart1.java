@@ -119,7 +119,7 @@ public class POEPart1 {
 
 // START OF PART 2: SENDING MESSAGES  
 
-public class Main{
+class ChatMain{
    public static void main(String[] args) {
    Scanner scanner = new Scanner(System.in);
    
@@ -157,13 +157,13 @@ public class Main{
        //consume newline 
         scanner.nextLine();
         
-        switch(choice) {
+        switch (choice) {
             case 1: 
                 System.out.print("Enter number of messages to send: ");
                 int numMessages = scanner.nextInt();
                 scanner.nextLine();
                 
-                for (int 1 = 0; i < numMessages; i++) {
+                for (int i = 0;i < numMessages; i++) {
                    System.out.println("\n--- Message" + (i + 1) + "---");
                    
                    System.out.print("Enter recipient cell number (e.g. +2771...):");
