@@ -20,5 +20,5 @@ public class StoreMessage {
     private String[] senders = new String[0];
     private String[] statuses = new String[0];
     
-  
+  //
 }
