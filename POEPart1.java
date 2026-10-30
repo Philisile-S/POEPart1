@@ -147,6 +147,7 @@ class ChatMain{
         System.out.println("1) Send Messages");
         System.out.println("2) Show recently sent messages (Coming Soon)");
         System.out.println("3) Quit");
+        System.out.println("4) Stored Messages");
         System.out.print("Choose an option: ");
         
         while(!scanner.hasNextInt()) {
@@ -217,19 +218,83 @@ class ChatMain{
             case 3:
                 System.out.println("Existing QuickChat. Goodbye!");
                 break;
+              //START OF PART 3 
+            case 4:
+                int storedChoice;
                 
-            default: 
-                System.out.println("Invaild option. Please choose between 1 and 3.");
+                do {
+                     System.out.println("\n--- STORED MESSAGES---");
+                     System.out.println("1) Display sender and recipient");
+                     System.out.println("2) Display longest message");
+                     System.out.println("3) Search for a message ID");
+                     System.out.println("4) Search messages by recipient");
+                     System.out.println("5) Delete message using message hash");
+                     System.out.println("6) Display full message report");
+                     System.out.println("7) Return to main menu");
+                     
+                     System.out.print("Choose an option: ");
+                     
+                     while (!scanner.hashNextInt()) {
+                     System.out.print("Invaild input. Enter a number (1-7): ");
+                     scanner.next();
+                     }
+                    
+                   storedChoice = scanner.nextInt();
+                   scanner.nextLine();
+                   
+                   switch (storedChoice) {
+                      
+                       case 1: 
+                           displaySendersAndRecipients();
+                           break;
+                       
+                       case 2: 
+                           displayLongestMessage();
+                           break;
+                           
+                       case 3:
+                           System.out.print("Enter message ID: ");
+                           String id = scanner.nextLine();
+                           searchMessageID(id);
+                           break;
+                           
+                       case 4: 
+                           System.out.print("Enter recipient number: ");
+                           String recipient = scanner.nextLine();
+                           searchRecipient(recipient);
+                           break;
+                           
+                       case 5: 
+                           System.out.print("Enter message hash: ");
+                           String hash = scanner.nextLine();
+                           deleteMessage(hash);
+                           break;
+                         
+                       case 6:
+                           displayMessageReport();
+                           break;
+                        
+                       case 7: 
+                           System.out.println("Returning to main menu...");
+                           break;
+                        
+                       default: 
+                System.out.println("Invaild option. Please choose between 1 and 7.");
+                        break;
+                        
+                   }
+                
         }
-      } while (choice != 3);
+          while (choice != 7);
+                break;
+                
+            default:
+                System.out.println("Invaild option. Please choose between 1 and 4");
+                break;
       
-      scanner.close();
+        }
      
-   }
-}
-
-     // END OF PART TWO 
+    //END OF PART THREE 
+     
 
 
-       //START OF PART THREE 
-  
