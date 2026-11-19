@@ -8,6 +8,10 @@ package com.mycompany.poepart1;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Path;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,94 +19,129 @@ public class StoreMessageTest {
 
     private StoreMessage store;
 
+   
+    @TempDir
+    Path tempDir;
+
     @BeforeEach
     public void setUp() {
-        store = new StoreMessage();
 
-        // Add the four test messages
-        store.addMessage("0838884567",
-                "Did you get the cake?");
+        // Use a separate JSON file for testing
+        String testFile = tempDir.resolve("testMessages.json").toString();
 
-        store.addMessage("+27838884567",
-                "Where are you? You are late! I have asked you to be on time.");
+        store = new StoreMessage(testFile);
 
-        store.addMessage("+27838884567",
-                "Ok, I am leaving without you.");
+        // Add four stored test messages
+        store.addMessage(
+                "1111111111",
+                "11:1:DIDCAKE",
+                "+27838884567",
+                "Did you get the cake?",
+                "Stored",
+                "Developer"
+        );
 
-        store.addMessage("0838884567",
-                "It is dinner time!");
+        store.addMessage(
+                "2222222222",
+                "22:2:WHERETIME",
+                "+27827776666",
+                "Where are you? You are late! I have asked you to be on time.",
+                "Stored",
+                "Developer"
+        );
+
+        store.addMessage(
+                "3333333333",
+                "33:3:OKYOU",
+                "+27827776666",
+                "Ok, I am leaving without you.",
+                "Stored",
+                "Developer"
+        );
+
+        store.addMessage(
+                "4444444444",
+                "44:4:ITTIME",
+                "+27838884567",
+                "It is dinner time!",
+                "Stored",
+                "Developer"
+        );
     }
 
-    // TEST 1: Sent Messages array correctly populated
+    // TEST 1: Check that stored messages are correctly populated
     @Test
-    public void testSentMessagesArray() {
+    public void testStoredMessagesArray() {
 
-        assertEquals(4, store.getTotalMessages());
+        assertEquals(4, store.getStoredMessage().length);
 
-        assertTrue(store.getAllMessages().contains(
-                "Did you get the cake?"));
+        assertTrue(Arrays.asList(store.getStoredMessage())
+                .contains("Did you get the cake?"));
 
-        assertTrue(store.getAllMessages().contains(
-                "It is dinner time!"));
+        assertTrue(Arrays.asList(store.getStoredMessage())
+                .contains("It is dinner time!"));
     }
 
-    // TEST 2: Display the longest message
+    // TEST 2: Display the longest stored message
     @Test
     public void testDisplayLongestMessage() {
 
         String expected =
                 "Where are you? You are late! I have asked you to be on time.";
 
-        assertEquals(expected, store.getLongestMessage());
-    }
-
-    // TEST 3: Search for message ID
-    @Test
-    public void testSearchMessageID() {
-
-        String expected = "It is dinner time!";
-
-        String actual = store.searchMessageID("0838884567");
+        String actual = store.displayLongestStoredMessage();
 
         assertEquals(expected, actual);
     }
 
-    // TEST 4: Search messages using recipient
+    // TEST 3: Search for a stored message using its ID
+    @Test
+    public void testSearchMessageID() {
+
+        String actual = store.searchStoredMessageID("4444444444");
+
+        assertTrue(actual.contains("It is dinner time!"));
+        assertTrue(actual.contains("+27838884567"));
+    }
+
+    // TEST 4: Search stored messages using the recipient's number
     @Test
     public void testSearchRecipient() {
 
-        String expected =
+        String actual = store.searchStoredRecipient("+27827776666");
+
+        assertTrue(actual.contains(
                 "Where are you? You are late! I have asked you to be on time."
-                + "Ok, I am leaving without you.";
-
-        String actual = store.searchRecipient("+27838884567");
+        ));
 
         assertTrue(actual.contains(
-                "Where are you? You are late! I have asked you to be on time."));
-
-        assertTrue(actual.contains(
-                "Ok, I am leaving without you."));
+                "Ok, I am leaving without you."
+        ));
     }
 
-    // TEST 5: Delete a message using its hash
+    // TEST 5: Delete a stored message using its hash
     @Test
     public void testDeleteMessageUsingHash() {
 
-        String messageHash = store.getMessageHash(1);
+        String messageHash = "22:2:WHERETIME";
 
-        assertTrue(store.deleteMessage(messageHash));
+        String result = store.deleteStoredMessage(messageHash);
 
-        assertFalse(store.getAllMessages().contains(
-                "Where are you? You are late! I have asked you to be on time."));
+        assertTrue(result.contains("successfully deleted"));
 
-        assertEquals(3, store.getTotalMessages());
+        assertEquals(3, store.getStoredMessage().length);
+
+        assertFalse(Arrays.asList(store.getStoredMessage())
+                .contains(
+                    "Where are you? You are late! I have asked you to be on time."
+                ));
     }
 
-    // TEST 6: Display complete message report
+    // TEST 6: Display the complete stored message report
     @Test
     public void testDisplayMessageReport() {
 
-        String report = store.displayReport();
+        String report = store.displayStoredMessageReport();
 
         assertNotNull(report);
 
