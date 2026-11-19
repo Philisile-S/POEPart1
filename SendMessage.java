@@ -15,15 +15,7 @@ import java.util.Random;
      private String messageHash;
      private String sender;
      private String status;
-     
-     //ARRAYS FOR PART 3 STORED MESSAGES
-     private static final int MAX_MESSAGES = 100;
-     
-     private static String[] messageIDs = new String[MAX_MESSAGES];
-     private static String[] senders = new String[MAX_MESSAGES];
-     private static String[] recipients = new String[MAX_MESSAGES];
-     private static String[] messages = new String[MAX_MESSAGES];
-     private static String[] messageHashes = new String[MAX_MESSAGES];
+    
      
      //Static counter to track total messages sent globally across instances 
      private static int messageCount = 0;
@@ -61,7 +53,7 @@ import java.util.Random;
      //2. Check/Validate recipient cell number: Ensures no more than 10 characters and 
      //contain an international code like '+'
      public String validateRecipientCell() {
-      if (this.recipient != null && this.recipient.startsWith("+") && this.recipient.length() <=13) {
+      if (recipient.matches("\\+[0-9]{1,12}")) {
        return "Cell phone number successfully captured.";
       }
       else{
@@ -69,52 +61,55 @@ import java.util.Random;
                  + " an international code. Please correct the number and try again.";
       }
      }
+     
      public boolean checkRecipientCell() {
-       return this.recipient != null && this.recipient.startsWith("+") && this.recipient.length() <= 10;
+    return recipient != null
+            && recipient.matches("\\+[0-9]{1,12}");
      }
     
      //3. Check message length (Max of 250 characters) 
      public String vaildateMessageLength() {
-       if (this.messageText != null && this.messageText.length() <= 250){
-         return "Message ready to send.";
-     }
-       else{
-          int length = (this.messageText == null)? 0 : this.messageText.length();
-          int excess = Math.max(0, length - 250);
-          return "Message exceeds 250 characters by " + excess + "please reduce the size.";
-               }
+         if (messageText !=null && messageText.length() <= 250) {
+             return "Message ready to send";
+             }
+         else {
+                int length = (messageText == null) ? 0 : messageText.length();
+                int excess = Math.max(0, length - 250);
+                
+         return "Message exceeds 250 charcters by "
+                 + excess + "characters. Please reduce the size.";
+         }
      }
       
       //Boolean vaildation for ChatMain 
-     public boolean isMessageLengthVaild() {
+     public boolean isMessageLengthValid() {
          return messageText != null && messageText.length() <= 250;
-     }
-     
-     //Boolean method required by ChatMain
-     public boolean vaildateMessageLengthBoolean() {
-         return isMessageLengthVaild();
      }
      
      //4. Create Message Hash: first 2 numbers of the messageID(:)Message number
      //(:)First and Last words in the mesasage
      public String createMessageHash() {
-         if (this.messageID == null || this.messageID.length() <2) {
+         if (messageID == null || messageID.length() <2) {
              return"";
          }
          
          String firstTwoId = messageID.substring(0, 2);
          
          //Clean and extract first and last words
-         String cleanedText = this.messageText.replaceAll("[^a-zA-Z ]", "").trim();
-         String[] words = cleanedText.split("\\s+");
-         
+         String cleanedText = (messageText == null)
+                 ? ""
+                 : messageText.replaceAll("[^a-zA-Z ]", "").trim();
+        
+         String[] words = cleanedText.isEmpty()
+                ? new String[0]
+                : cleanedText.split("\\s+");
+                        
          String firstWord = "";
          String lastWord = "";
          
-          if (!cleanedText.isEmpty()) {
-              
+          if (words.length > 0) {
               firstWord = words[0];
-              lastWord = words[words.length - 1]; 
+              lastWord = words[words.length - 1];
           }
           
          return firstTwoId + ":" + this.messageSent + ":" + (firstWord + lastWord).toUpperCase();        
