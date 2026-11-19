@@ -53,8 +53,10 @@ public class POEPart1 {
          
           System.out.println("Username successfully captured.");
          
+          //Clear the remaining newline after username input
+          myInput.nextLine();
+          
       //Ask for password input 
-     
        while(!login.checkPasswordComplexity(password)){
             System.out.print("Please enter your password: ");
             password = myInput.nextLine();
@@ -110,122 +112,19 @@ public class POEPart1 {
         
         System.out.println("\n" + loginMessage);
         
-       //Close Scanner
+        //Start QuickChat only if login is succussful 
+         if (loginMessage.toLowerCase().contains("success")) {
+             
+             ChatMain.start(myInput, loginUserName);
+         }
+         else {
+             System.out.println("Login failed. Please check your username and password.");
+         }
+        
+       //Close Scanner after QuickChat finishes 
      myInput.close();
      
     }
 }
 
 
-// START OF PART 2: SENDING MESSAGES  
-
-class ChatMain{
-   public static void main(String[] args) {
-   Scanner scanner = new Scanner(System.in);
-   
-     //Simulated Login Check (assuming login from Part 1) 
-     System.out.println("=== QuickChat Login ===");
-     System.out.print("Please enter your username: ");
-     String username = scanner.nextLine();
-     System.out.print("Please enter your password: ");
-     String password = scanner.nextLine();
-     
-     //Simple validation placeholder for login success
-     boolean isLoggedIn = !username.isEmpty() && !password.isEmpty();
-     
-     if (!isLoggedIn) {
-       System.out.println("Login failed. Existing application.");
-       return;
-     }
-     
-     //Welcome Message 
-     System.out.println("Welcome to QuickChat.");
-     
-     int choice;
-     do{
-        System.out.println("\n--- Main Menu ---");
-        System.out.println("1) Send Messages");
-        System.out.println("2) Show recently sent messages (Coming Soon)");
-        System.out.println("3) Quit");
-        System.out.print("Choose an option: ");
-        
-        while(!scanner.hasNextInt()) {
-             System.out.print("Invaild input. Please enter a number(1-3): ");
-             scanner.next();
-        }
-        choice = scanner.nextInt();
-       //consume newline 
-        scanner.nextLine();
-        
-        switch (choice) {
-            case 1: 
-                System.out.print("Enter number of messages to send: ");
-                int numMessages = scanner.nextInt();
-                scanner.nextLine();
-                
-                for (int i = 0;i < numMessages; i++) {
-                   System.out.println("\n--- Message" + (i + 1) + "---");
-                   
-                   System.out.print("Enter recipient cell number (e.g. +2771...):");
-                   String recipient = scanner.nextLine();
-                   
-                   System.out.print("Enter message (max 250 characters): ");
-                   String text = scanner.nextLine();
-                   
-                   SendMessage msg = new SendMessage(recipient, text, i);
-                   
-                   //Validate recipient 
-                   if (!msg.checkRecipientCell()) {
-                     System.out.println("Cell phone number is incorrectly formatted "
-                             + "or does not contain an international code. Please "
-                             + "correct the number and try again.");
-                     continue;
-                   }
-                   else {
-                       System.out.println("Message ready to send.");
-                   }
-                   
-                   //Sub-menu for action 
-                   System.out.println("Choose action: ");
-                   System.out.println("1) Send Message");
-                   System.out.println("2) Disregard Message");
-                   System.out.println("3) Store Message to send later");
-                   System.out.print("Select option (1-3): ");
-                   int actionChoice = scanner.nextInt();
-                   scanner.nextLine();
-                   
-                   String result = msg.processMessageAction(actionChoice);
-                   System.out.println(result);
-                   
-                   //Display Details if sent/stored 
-                   if (actionChoice == 1 || actionChoice == 3) {
-                      System.out.println("\n--- Message Summary ---");
-                      System.out.println("Message ID: " + msg.getMessageID());
-                      System.out.println("Message Hash: " + msg.getMessageHash());
-                      System.out.println("Recipient: " + msg.getRecipient());
-                      System.out.println("Message: " + msg.getMessageText());
-                   }
-                }
-        
-        System.out.println("Total messages processed/sent: " + SendMessage.returntotalnumofMessageSent());
-         break;
-         
-            case 2: 
-                System.out.println("Coming Soon.");
-                break;
-            
-            case 3:
-                System.out.println("Existing QuickChat. Goodbye!");
-                break;
-                
-            default: 
-                System.out.println("Invaild option. Please choose between 1 and 3.");
-        }
-      } while (choice != 3);
-      
-      scanner.close();
-     
-   }
-}
-
-     // END OF PART TWO 
