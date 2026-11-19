@@ -24,9 +24,10 @@ import java.util.Random;
      private static String[] messages = new String[MAX_MESSAGES];
      private static String[] messageHashes = new String[MAX_MESSAGES];
      
-     //Static counter to track total messages sent globally across instances
+     //Static counter to track total messages sent globally across instances 
      private static int messageCount = 0;
-     private static int totalnumofMessageSent = 0;
+     //Static counter for messages successfully sent
+     public static int totalnumofMessageSent = 0;
      
      //Construtor 
      public SendMessage(String recipient, String messageText, int messageSent) {
@@ -34,8 +35,9 @@ import java.util.Random;
          this.recipient = recipient;
          this.messageText = messageText;
          this.messageSent = messageSent;
+         this.sender = "Developer";
+         this.status = "";
          this.messageHash = createMessageHash();
-         this.sender = "";
      }
      
      //Generate a random 10 digit message ID 
@@ -52,7 +54,7 @@ import java.util.Random;
      
      //1. Check MessageID: Ensure ID is not more than 10 characters 
      public boolean checkMessageID() {
-        return this.messageID != null && this.messageID.length() <=10;
+        return this.messageID != null && messageID.length() <= 10;
      }
      
      //2. Check/Validate recipient cell number: Ensures no more than 10 characters and 
@@ -86,33 +88,26 @@ import java.util.Random;
      public String createMessageHash() {
          if (this.messageID == null || this.messageID.length() <2) {
              return"";
+         }
+         
          String firstTwoId = messageID.substring(0, 2);
+         
          //Clean and extract first and last words
          String cleanedText = this.messageText.replaceAll("[^a-zA-Z ]", "").trim();
          String[] words = cleanedText.split("\\s+");
          
-         String firstWord = words.length > 0 ? words[0] : "";
-         String lastWord = words.length > 1 ? words[words.length - 1] : firstWord;
+         String firstWord = "";
+         String lastWord = "";
          
+          if (!cleanedText.isEmpty()) {
+              
+              firstWord = words[0];
+              lastWord = words[words.length - 1]; 
+          }
+          
          return firstTwoId + ":" + this.messageSent + ":" + (firstWord + lastWord).toUpperCase();        
      }
      
-       //Store message in arrays
-       private boolean storeMessage() {
-           if (messageCount >= MAX_MESSAGES){
-               return false; 
-           }
-           
-           messageIDs[messageCount] = messageID;
-           senders[messageCount] = sender;
-           recipients[messageCount] = recipient;
-           messages[messageCount] = messageText;
-           messageHashes[messageCount] = messageHash;
-           
-           messageCount++;
-           
-           return true;
-           
        }
  
      //5. Handle Send/Store/Disregard Actions
@@ -120,19 +115,21 @@ import java.util.Random;
        switch (choice) {
            //Send Message
            case 1: 
+               status = "Sent"; 
                totalnumofMessageSent++;
                return "Message successfully sent.";
+               
            //Disregard Message or delete
            case 2: 
+               status = "Disregard";
                return "Message disregarded.";
+               
            //Store Message to send later 
            case 3: 
-               if(storeMessage()) {
+               status = "Stored";
+               
                return "Message successfully stored.";
-               }
-               else{
-               return "Message storage is full.";
-               }
+               
            default:
                return "Invaild choice.";
                        
@@ -154,125 +151,35 @@ import java.util.Random;
          }
      }
         
-     // b. Display longest message 
-     public static void displayLongestMessage() {
      
-         if (messageCount == 0) {
-            System.out.println("No stored messages available");
-            return;
-         }
-         
-         int longestIndex = 0;
-         
-         for (int i = 1; i < messageCount; i++) {
-            if (mesages[i].length() > mesages[longestIndex].length()) {
-               longestIndex = i;
-            }
-         }
-         
-         System.out.println("Longest stored message: ");
-         System.out.println(messages[longestIndex]);
+     //Getters
+     public String getMessageID() {
+         return messageID; 
      }
      
-     // c. Search by message ID
-      public static void searchMessageID(String id) {
-         
-          boolean found = false;
-          
-          for (int i = 0; i < messageCount; i++) {
-             
-              if (messageIDs[i].equals(id)) {
-                 System.out.println("Recipient: " + recipients[i]);
-                 System.out.println("Message: " + messages[i]);
-                 found = true;
-                 break;
-              }
-          }
-          
-          if (!found) {
-              System.out.println("Message ID not found.");
-          }
-      }
-      
-      // d. Search messages by recipient
-      public static void searchRecipient(String recipient) {
-          
-          boolean found = false;
-          
-          for (int i = 0; i < messageCount; i++) {
-          
-              if (recipients[i].equals(recipients)) {
-                 System.out.println("Message ID: " + messageIDs[i]);
-                 System.out.println("Message: " + messages[i]);
-                 System.out.println("---------------------------");
-                 found = true;
-              }
-          }
-          
-          if (!found) {
-          System.out.println("No messages found for this recipient");
-          }
-      }
-      
-      // e. Delete message using message hash
-      public static void deleteMessage(String hash) {
-      
-          for (int i =0; i < messageCount; i++) {
-              
-              if (messageHashes[i].equals(hash)) {
-               
-                  for (int j = i; j < messageCount - 1; j++) {
-                      messageIDs[j] = messageIDs[j + 1];
-                      senders[j] = senders[j + 1];
-                      recipients[j] = recipients[j + 1];
-                      messages[j] = messages[j + 1];
-                      messageHashes[j] = messageHashes[j + 1];
-                  }
-                  
-                  messageCount--;
-                  
-                  messageIDs[messageCount] = null;
-                  senders[messageCount] = null;
-                  recipients[messageCount] = null;
-                  messages[messageCount] = null;
-                  messageHashes[messageCount] = null;
-                  
-                  System.out.println("Message successfully deleted.");
-                  return;
-              }
-          }
-          
-          System.out.println("Message hash out found.");
-      }
-      
-      // f. Display full message report 
-      public static void displayMessageReport() {
-       
-          if (messageCount == 0) {
-             System.out.println("No stored messages available.");
-             return;
-          }
-          
-          System.out.println("==== STORED MESSAGES REPORT ====");
-          
-          for (int i = 0; i < messageCount; i++) {
-              System.out.println("Message ID: " + messageIDs[i]);
-              System.out.println("Message Hash: " + messageHashes[i]);
-              System.out.println("Sender: " + senders[i]);
-              System.out.println("Recipient: " + recipients[i]);
-              System.out.println("Message: " + messages[i]);
-              System.out.println("------------------------------- ");
-          }
-      }
-      
-     //Getters
-     public String getMessageID() { return messageID; }
-     public String getRecipient() { return recipient; }
-     public String getMessageText() { return messageText; }
-     public String getMessageHash() { return messageHash; } 
+     public String getRecipient() {
+         return recipient; 
+     }
      
+     public String getMessageText() {
+         return messageText;
+     }
+     public String getMessageHash() { 
+         return messageHash; 
+     } 
+     public String getSender() {
+         return sender;
+     }
+     public String getStatus() {
+         return status;
+     }
+     public int getMessageSent() {
+         return messageSent;
+     }
+     
+     //Return total number of messages sent 
      public static int returntotalnumofMessageSent() {
         return totalnumofMessageSent;
-     }
-  }
-
+     };
+  
+}
