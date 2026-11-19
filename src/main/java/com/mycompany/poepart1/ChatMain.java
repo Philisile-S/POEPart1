@@ -154,11 +154,11 @@ public class ChatMain {
             else {
                 System.out.println("Message was not stored or sent.");
             }
-        
+        } //End of for loop
 
         System.out.println("\nTotal messages sent: "
                 + SendMessage.returntotalnumofMessageSent());
-    }
+    }//End of sendMessages method
     
 
     // Display all sent messages
