@@ -110,9 +110,9 @@ public class ChatMain {
             }
 
             // Validate message length
-            if (!msg.validateMessageLength().equals("Message ready to send.")) {
-
-                System.out.println(msg.validateMessageLength());
+            if (!msg.isMessageLengthValid()) {
+                System.out.println(msg.vaildateMessageLength());
+                
                 System.out.println("Message was not processed.");
                 continue;
             }
@@ -132,8 +132,8 @@ public class ChatMain {
 
             // Add only successfully processed messages
             if (msg.getStatus().equals("Sent")
-                    || msg.getStatus().equals("Stored")
-                    || msg.getStatus().equals("Disregard")) {
+                    || msg.getStatus().equals("Stored"){
+                    
 
                 store.addMessage(
                         msg.getMessageID(),
@@ -141,7 +141,7 @@ public class ChatMain {
                         msg.getRecipient(),
                         msg.getMessageText(),
                         msg.getStatus(),
-                        msg.getSender()
+                        msg.getSender())             
                 );
 
                 System.out.println("\n------- MESSAGE SUMMARY -------");
@@ -150,7 +150,7 @@ public class ChatMain {
                 System.out.println("Sender: " + msg.getSender());
                 System.out.println("Recipient: " + msg.getRecipient());
                 System.out.println("Message: " + msg.getMessageText());
-                System.out.println("Status: " + msg.getStatus());
+                System.out.println("Message Status: " + msg.getStatus());
             }
         }
 
@@ -200,14 +200,12 @@ public class ChatMain {
 
                 case 1:
                     System.out.println(
-                            store.displayStoredSendersAndRecipients()
-                    );
+                            store.displayStoredSendersAndRecipients());
                     break;
 
                 case 2:
                     System.out.println(
-                            store.displayLongestStoredMessage()
-                    );
+                            store.displayLongestStoredMessage());
                     break;
 
                 case 3:
