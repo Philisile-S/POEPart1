@@ -11,7 +11,7 @@ import java.util.Random;
      private String messageID;
      private int messageSent;
      private String messageText;
-     private String recipient;;
+     private String recipient;
      private String messageHash;
      private String sender;
      private String status;
