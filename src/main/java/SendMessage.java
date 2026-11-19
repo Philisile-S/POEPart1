@@ -11,8 +11,10 @@ import java.util.Random;
      private String messageID;
      private int messageSent;
      private String messageText;
-     private String recipient;;
+     private String recipient;
      private String messageHash;
+     private String sender;
+     private String status;
      
      //Static counter to track total messages sent globally across instances
      private static int totalnumofMessageSent = 0;
@@ -80,30 +82,61 @@ import java.util.Random;
      }
      
      //5. Handle Send/Store/Disregard Actions
-     public String processMessageAction(int choice) {
-       switch (choice) {
+     public String processMessageAction(int actionChoice) {
+       switch (actionChoice) {
            //Send Message
            case 1: 
-               messageSent++;
+               status = "Sent";
+               totalnumofMessageSent++;
                return "Message successfully sent.";
            //Disregard Message or delete
            case 2: 
-               return "Press 0 to delete the message.";
+               status = "Disregarded";
+               return "Message disregarded.";
            //Store Message to send later 
            case 3: 
+               status = "Stored";
                return "Message successfully stored.";
            default:
+               status = "Invaild";
                return "Invaild choice.";
-                       
+       }       
        }
-     }
+       
+       //Set the sender username 
+       public void setSender(String sender) {
+           this.sender = sender;
+       }
+       //Return the sender username 
+       public String getSender{} {
+          return sender;
+      }
+       //Return the message status
+       public String getStatus() {
+           return status;
+       }
+       //Check if themessage Length is vaild 
+       public boolean isMessageLengthValid() {
+           return messageText != null
+                   && !messageText.trim().isEmpty()
+                   && messageText.length() <= 250;
+       }
+     
      
      //Getters
-     public String getMessageID() { return messageID; }
-     public String getRecipient() { return recipient; }
-     public String getMessageText() { return messageText; }
-     public String getMessageHash() { return messageHash; } 
-     
+     public String getMessageID() { 
+         return messageID; 
+     }
+     public String getRecipient() { 
+         return recipient; 
+     }
+     public String getMessageText() {
+         return messageText;
+     }
+     public String getMessageHash() { 
+         return messageHash;
+     } 
+     //Return total messages sent
      public static int returntotalnumofMessageSent() {
         return totalnumofMessageSent;
      }
