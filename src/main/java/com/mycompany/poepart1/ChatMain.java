@@ -125,37 +125,34 @@ public class ChatMain {
 
             int actionChoice = readInteger(scanner);
 
-            // Process selected action
-            String result = msg.processMessageAction(actionChoice);
+           // Add only successfully processed messages
+if ("Sent".equals(msg.getStatus())
+        || "Stored".equals(msg.getStatus())) {
 
-            System.out.println(result);
+    store.addMessage(
+            msg.getMessageID(),
+            msg.getMessageHash(),
+            msg.getRecipient(),
+            msg.getMessageText(),
+            msg.getStatus(),
+            msg.getSender()
+    );
 
-            // Add only successfully processed messages
-            if ("Sent".equals(msg.getstatus())
-                  || "Stored".equals(msg.getStatus())) {    
-            
-                store.addMessage(
-                        msg.getMessageID(),
-                        msg.getMessageHash(),
-                        msg.getRecipient(),
-                        msg.getMessageText(),
-                        msg.getstatus(),
-                        msg.getSender()            
-                );
+    System.out.println("\n------- MESSAGE SUMMARY -------");
+    System.out.println("Message ID: " + msg.getMessageID());
+    System.out.println("Message Hash: " + msg.getMessageHash());
+    System.out.println("Sender: " + msg.getSender());
+    System.out.println("Recipient: " + msg.getRecipient());
+    System.out.println("Message: " + msg.getMessageText());
+    System.out.println("Message Status: " + msg.getStatus());
 
-                System.out.println("\n------- MESSAGE SUMMARY -------");
-                System.out.println("Message ID: " + msg.getMessageID());
-                System.out.println("Message Hash: " + msg.getMessageHash());
-                System.out.println("Sender: " + msg.getSender());
-                System.out.println("Recipient: " + msg.getRecipient());
-                System.out.println("Message: " + msg.getMessageText());
-                System.out.println("Message Status: " + msg.getstatus());
-            }
-            else {
-                System.out.println("Message was not stored or sent.");
-            }
-        } //End of for loop
+} else {
 
+    System.out.println("Message was not stored or sent.");
+
+}
+} // End of for loop
+        
         System.out.println("\nTotal messages sent: "
                 + SendMessage.returntotalnumofMessageSent());
     }//End of sendMessages method
