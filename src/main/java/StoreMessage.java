@@ -8,15 +8,11 @@ package com.mycompany.poepart1;
  * @author Philisile Mavuso
  */
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.IOException;
-
- import java.util.ArrayList;
+import java.util.ArrayList;
  import java.util.List;
  import java.io.FileWriter;
- import java.io.IOException;
- import java.nio.file.Paths;
- 
  import org.json.JSONArray;
  import org.json.JSONObject;
  
@@ -89,7 +85,7 @@ public class StoreMessage {
         }
         
      messages.add (new MessageRecord(
-                   id, hash, recipient,text, status, "Developer"
+                   id, hash, recipient,text, status, sender
      ));
      
      populateArrays();
@@ -220,25 +216,32 @@ public class StoreMessage {
      //(a) Display sender and recipient of stored mesages 
       public String displayStoredSendersAndRecipients() {
            
-          String result = "";
+          StringBuilder result = new StringBuilder();
           
           for (MessageRecord message : messages) {
               
              if ("Stored".equalsIgnoreCase(message.status)) {
                  
-                 result += "Sender: " + message.sender
-                        + "\nRecipient: " + message.recipient
-                        + "\n\n";
+                result.append("Sender: ")
+                       .append(message.sender) 
+                       .append("\n");
+                
+                result.append("Recipient: ")
+                       .append(message.recipient)
+                       .append("\n");
+               
+                result.append("--------------------------\n");
+                       
              }
           }
           
-           return result.isEmpty()
-                   ? "No stored messages found."
-                   : result;
+            return result.length() == 0 
+                    ? "No stored messages available."
+                    : result.toString();
       }
       
        //(b) Display the longest stored message 
-         public String displaylongestStoredMessage() {
+         public String displayLongestStoredMessage() {
              
              String longest = "";
              
@@ -349,7 +352,7 @@ public class StoreMessage {
             return sentMessage;         
         }
         
-        public String[] getDisregarededMessage() {
+        public String[] getDisregardedMessage() {
             return disregardedMessage;
         }
         
