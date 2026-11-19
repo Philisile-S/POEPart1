@@ -131,16 +131,15 @@ public class ChatMain {
             System.out.println(result);
 
             // Add only successfully processed messages
-            if (msg.getStatus().equals("Sent")
-                    || msg.getStatus().equals("Stored"){
-                    
-
+            if ("Sent".equals(msg.getstatus())
+                  || "Stored".equals(msg.getStatus())) {    
+            
                 store.addMessage(
                         msg.getMessageID(),
                         msg.getMessageHash(),
                         msg.getRecipient(),
                         msg.getMessageText(),
-                        msg.getStatus(),
+                        msg.getstatus(),
                         msg.getSender()            
                 );
 
@@ -150,13 +149,17 @@ public class ChatMain {
                 System.out.println("Sender: " + msg.getSender());
                 System.out.println("Recipient: " + msg.getRecipient());
                 System.out.println("Message: " + msg.getMessageText());
-                System.out.println("Message Status: " + msg.getStatus());
+                System.out.println("Message Status: " + msg.getstatus());
             }
-        }
+            else {
+                System.out.println("Message was not stored or sent.");
+            }
+        
 
         System.out.println("\nTotal messages sent: "
                 + SendMessage.returntotalnumofMessageSent());
     }
+    
 
     // Display all sent messages
     private static void displaySentMessages() {
