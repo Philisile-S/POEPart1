@@ -141,7 +141,7 @@ public class ChatMain {
                         msg.getRecipient(),
                         msg.getMessageText(),
                         msg.getStatus(),
-                        msg.getSender())             
+                        msg.getSender()            
                 );
 
                 System.out.println("\n------- MESSAGE SUMMARY -------");
