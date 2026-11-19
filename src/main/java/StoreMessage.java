@@ -84,7 +84,7 @@ public class StoreMessage {
             return;
         }
         
-     messages.add{new MessageRecord(
+     messages.add (new MessageRecord(
                    id, hash, recipient,text, status, "Developer"
      ));
      
@@ -96,7 +96,7 @@ public class StoreMessage {
   }
 
   //Populate all five required arrays from actual message recipients.
-   public final void populateArrays{} {
+   public final void populateArrays() {
     
 
      List<String> sent = new ArrayList<>();
@@ -179,7 +179,7 @@ public class StoreMessage {
    //Read stored messages from JSON file
  private void loadStoreMessageFromJSON() {
      
-     try {
+      try {
           
            if(!Files.exists(Paths.get(jsonFile))) {
                return;
@@ -207,7 +207,7 @@ public class StoreMessage {
                   messages.add(record);
                
            }
-              catch (IOException e) {
+        } catch (IOException e) {
                       
                 System.out.println("Error loading messages: " + e.getMessage());
             }
