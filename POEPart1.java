@@ -29,7 +29,7 @@ public class POEPart1 {
          Login login = new Login();
         
         // USER REGISTRATION 
-        
+        System.out.println("====USER REGISTRATION ====");
        //User's name input
         System.out.print("Please enter your name: ");
         name = myInput.next();
@@ -97,7 +97,9 @@ public class POEPart1 {
        
        System.out.println("Registration successful");
        System.out.println("Welcome "+ name + " "+ surname);
-   
+       
+   //LOGIN
+   System.out.println("\n==== USER LOGIN ====");
        //Login Features
        System.out.print("Please enter your username: ");
        loginUserName = myInput.nextLine();
@@ -109,6 +111,18 @@ public class POEPart1 {
         loginMessage = login.returnLoginStatus(loginUserName, loginPassword);
         
         System.out.println("\n" + loginMessage);
+        
+        //Start QuickChat only if login is successful 
+          if (loginMessage.startsWith("Welcome")) {
+              
+              System.out.println("Welcome to QuickChat, " + name + "!");
+              
+              ChatMain.start(myInput, userName);
+            
+          }
+          else {
+              System.out.println("Login unsuccessful. QuickChat cannot start.");
+          }
         
        //Close Scanner
      myInput.close();
