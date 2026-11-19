@@ -14,6 +14,7 @@ import java.util.Random;
      private String recipient;;
      private String messageHash;
      private String sender;
+     private String status;
      
      //ARRAYS FOR PART 3 STORED MESSAGES
      private static final int MAX_MESSAGES = 100;
@@ -60,7 +61,7 @@ import java.util.Random;
      //2. Check/Validate recipient cell number: Ensures no more than 10 characters and 
      //contain an international code like '+'
      public String validateRecipientCell() {
-      if (this.recipient != null && this.recipient.startsWith("+") && this.recipient.length() <=10) {
+      if (this.recipient != null && this.recipient.startsWith("+") && this.recipient.length() <=13) {
        return "Cell phone number successfully captured.";
       }
       else{
@@ -78,9 +79,20 @@ import java.util.Random;
          return "Message ready to send.";
      }
        else{
-          int excess = this.messageText.length() - 250;
+          int length = (this.messageText == null)? 0 : this.messageText.length();
+          int excess = Math.max(0, length - 250);
           return "Message exceeds 250 characters by " + excess + "please reduce the size.";
                }
+     }
+      
+      //Boolean vaildation for ChatMain 
+     public boolean isMessageLengthVaild() {
+         return messageText != null && messageText.length() <= 250;
+     }
+     
+     //Boolean method required by ChatMain
+     public boolean vaildateMessageLengthBoolean() {
+         return isMessageLengthVaild();
      }
      
      //4. Create Message Hash: first 2 numbers of the messageID(:)Message number
@@ -108,7 +120,7 @@ import java.util.Random;
          return firstTwoId + ":" + this.messageSent + ":" + (firstWord + lastWord).toUpperCase();        
      }
      
-       }
+  
  
      //5. Handle Send/Store/Disregard Actions
      public String processMessageAction(int choice) {
@@ -145,13 +157,13 @@ import java.util.Random;
          }
          
          for (int i = 0; i < messageCount; i++){
+             
              System.out.println("Sender: " + senders[i]);
              System.out.println("Recipient: " + recipients[i]);
              System.out.println("-----------------------------");
          }
      }
         
-     
      //Getters
      public String getMessageID() {
          return messageID; 
@@ -180,6 +192,10 @@ import java.util.Random;
      //Return total number of messages sent 
      public static int returntotalnumofMessageSent() {
         return totalnumofMessageSent;
-     };
-  
+     }
 }
+
+
+
+    
+    
