@@ -130,6 +130,3 @@ public class POEPart1 {
     }
 }
 
-
-// START OF PART 2: SENDING MESSAGES  
-
